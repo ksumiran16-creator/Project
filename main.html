@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Marry Me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0;
+            animation: fadeIn 2s ease-out;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 105, 180, 0.9); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 250px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .photo-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .photo-frame:hover .photo-inner {
+            transform: rotateY(180deg);
+        }
+
+        .photo-front, .photo-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-front {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #fff;
+        }
+
+        .photo-back {
+            background-color: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Love Story */
+        .love-story {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideUp 1.5s ease-out;
+        }
+
+        .love-story h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff9a9e;
+        }
+
+        .story-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .story-text {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .story-visual {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Countdown */
+        .countdown {
+            margin: 40px 0;
+            animation: fadeIn 2s ease-out 1s both;
+        }
+
+        .countdown h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff9a9e;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 100px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff9a9e;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Proposal Section */
+        .proposal {
+            margin: 60px 0;
+            position: relative;
+            animation: fadeIn 2s ease-out 1.5s both;
+        }
+
+        .ring-box {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            perspective: 1000px;
+        }
+
+        .ring {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+
+        .ring-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 5px solid #ff9a9e;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 154, 158, 0.7);
+        }
+
+        .diamond {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #fff, #e0e0e0);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .proposal-text {
+            font-size: 1.8rem;
+            margin: 30px 0;
+            line-height: 1.6;
+        }
+
+        .proposal-question {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin: 30px 0;
+            color: #ff9a9e;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        }
+
+        .btn-no {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotateY(0); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .proposal-question { font-size: 2.5rem; }
+            .story-content { flex-direction: column; }
+            .countdown-timer { gap: 10px; }
+            .countdown-item { min-width: 80px; padding: 15px; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            opacity: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <header>
+            <h1>My Dearest Love</h1>
+            <p class="subtitle">Every moment with you is a treasure I'll cherish forever</p>
+        </header>
+
+        <section class="photo-gallery">
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="photo-back">
+                        "The day we met, my life changed forever"
+                    </div>
+                </div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <i class="fas fa-kiss-wink-heart"></i>
+                    </div>
+                    <div class="photo-back">
+                        "Your smile lights up my world"
+                    </div>
+                </div>
+            </div>
+            <div class="photo-frame">
+                <div class="photo-inner">
+                    <div class="photo-front">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="photo-back">
+                        "In your arms, I've found my home"
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="love-story">
+            <h2>Our Beautiful Journey</h2>
+            <div class="story-content">
+                <div class="story-text">
+                    <p>From the moment our eyes first met, I knew there was something special about you. Your laughter became my favorite sound, your smile my favorite sight, and your heart my favorite place to be.</p>
+                    <p>We've shared countless memories. Through every challenge and every joy, you've been my constant, my rock, my everything.</p>
+                    <p>You've shown me what true love means - patient, kind, and unconditional. With you, I've discovered parts of myself I never knew existed, and I've become a better person because of your love.</p>
+                </div>
+                <div class="story-visual">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="countdown">
+            <h2>Until Forever Begins</h2>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">365</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">24</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">60</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">60</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="proposal">
+            <div class="ring-box">
+                <div class="ring">
+                    <div class="ring-inner"></div>
+                    <div class="diamond"></div>
+                </div>
+            </div>
+            
+            <p class="proposal-text">You are the most amazing person I've ever known. You've brought more joy, love, and meaning into my life than I ever thought possible.</p>
+            <p class="proposal-text">I can't imagine my future without you by my side. I want to wake up next to you every morning and fall asleep holding you every night.</p>
+            
+            <div class="proposal-question">Will You Marry Me?</div>
+            
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesBtn">Yes, A Thousand Times Yes!</button>
+                <button class="btn btn-no" id="noBtn">I Need to Think...</button>
+            </div>
+        </section>
+
+        <footer>
+            <p>Made with <i class="fas fa-heart" style="color: #ff9a9e;"></i> for the love of my life</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            // Set your proposal date here (year, month-1, day)
+            const proposalDate = new Date(2024, 11, 31); // December 31, 2024
+            const now = new Date();
+            const diff = proposalDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff9a9e', '#fad0c4', '#a1c4fd', '#c2e9fb', '#ffecd2'];
+            const confettiCount = 150;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random color
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.backgroundColor = color;
+                
+                // Random position
+                const x = Math.random() * window.innerWidth;
+                const y = -10;
+                
+                // Random size
+                const size = Math.random() * 10 + 5;
+                
+                // Random rotation
+                const rotation = Math.random() * 360;
+                
+                // Random animation duration
+                const duration = Math.random() * 3 + 2;
+                
+                confetti.style.left = `${x}px`;
+                confetti.style.top = `${y}px`;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                confetti.style.opacity = '1';
+                
+                // Random animation
+                const animation = confetti.animate([
+                    { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight}px) rotate(${rotation + 360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+                });
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                animation.onfinish = () => {
+                    confetti.remove();
+                };
+            }
+        }
+
+        // Yes button event
+        document.getElementById('yesBtn').addEventListener('click', function() {
+            createConfetti();
+            
+            // Change the proposal text
+            document.querySelector('.proposal-question').textContent = "You've Made Me The Happiest Person!";
+            document.querySelector('.proposal-question').style.color = '#ff9a9e';
+            
+            // Change buttons
+            this.textContent = "I Can't Wait!";
+            document.getElementById('noBtn').style.display = 'none';
+            
+            // Add celebration message
+            const celebration = document.createElement('div');
+            celebration.innerHTML = '<p style="font-size: 1.5rem; margin-top: 20px;">Our forever starts now! 💖</p>';
+            document.querySelector('.proposal').appendChild(celebration);
+        });
+
+        // No button event (with a little fun)
+        document.getElementById('noBtn').addEventListener('click', function() {
+            // Move the button randomly
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            this.style.position = 'fixed';
+            this.style.left = `${x}px`;
+            this.style.top = `${y}px`;
+            
+            // Change text after a few tries
+            if (Math.random() > 0.7) {
+                this.textContent = "Are you sure?";
+            }
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
